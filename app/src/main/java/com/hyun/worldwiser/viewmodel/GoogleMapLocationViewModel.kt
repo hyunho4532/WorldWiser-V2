@@ -50,6 +50,7 @@ class GoogleMapLocationViewModel(
     }
 
     private fun setLastLocation(location: Location) {
+        Log.d("GoogleMapLocationViewModel", location.toString())
         _userCurrentLocation.postValue(location)
     }
 }
