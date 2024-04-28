@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="world_wiser_title_font_size">22sp</dimen>
+    <dimen name="world_wiser_content_font_size">12sp</dimen>
+
+    <dimen name="email_text_form_field_width">300dp</dimen>
+    <dimen name="password_text_form_field_width">300dp</dimen>
+
+    <dimen name="country_text_form_field_width">230dp</dimen>
+    <dimen name="country_form_field_hint_size">14dp</dimen>
+    
+    <dimen name="country_preferences_choose_title_font_size">18sp</dimen>
+    <dimen name="transportation_choose_title_font_size">18sp</dimen>
+    <dimen name="world_wiser_nickname_title_font_size">18sp</dimen>
+
+    <dimen name="country_preferences_choose_font_size">14sp</dimen>
+    <dimen name="transportation_choose_font_size">14sp</dimen>
+
+    <dimen name="world_wiser_login_to_move_text_size">10sp</dimen>
+
+    <dimen name="world_wiser_register_button_width">320dp</dimen>
+</resources>

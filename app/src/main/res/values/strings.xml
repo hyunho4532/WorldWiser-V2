@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Worldwiser</string>
+    <string name="activity_login_hello_world_wiser">안녕하세요. \n월드와이저입니다.</string>
+    <string name="activity_login_simple_login_needed">월드와이저를 이용하기 위해 정보들을 입력해주세요.</string>
+
+    <string name="activity_login_inputEmail_Text">이메일을 입력해주세요.</string>
+    <string name="activity_login_inputPassword_Text">비밀번호를 입력해주세요.</string>
+
+    <string name="activity_travel_insert_text">여행을 가고 싶은 나라를 입력해주세요.</string>
+
+    <string name="activity_travel_where_text">여행은 어디로 갔다오셨나요?</string>
+    <string name="activity_travel_recommend_where_text">추천하고 싶은 여행지는 어디인가요?</string>
+
+    <string name="activity_travel_recommend_goes_text">마치고 온 여행지를 입력해주세요.</string>
+    <string name="activity_travel_recommend_text">추천하고 싶은 여행지를 입력해주세요.</string>
+
+    <string name="activity_verification_country_Text">좋아하는 나라를 입력해주세요.</string>
+    <string name="activity_verification_nickname_Text">닉네임을 입력해주세요.</string>
+
+    <!-- 인트로(스플래시 화면에서) 구름의 역할이 무엇인가? -->
+    <string name="iv_intro_cloud_large_todo">사이즈가 제일로 큰 구름</string>
+    <string name="iv_intro_cloud_medium_todo">사이즈가 적당한 구름</string>
+    <string name="iv_intro_cloud_small_todo">사이즈가 제일로 작은 구름</string>
+    <string name="iv_intro_airplane">3D 비행기</string>
+
+    <string name="activity_login_forget_password_text">비밀번호를 잊어버리셨나요?</string>
+    <string name="activity_not_find_email_text">이메일이 없으신가요?</string>
+    <string name="activity_find_email_text">이메일이 있으신가요?</string>
+
+    <string name="activity_login_simple_login_detail_needed">월드와이저를 이용하기 위해 정보 입력해주세요.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

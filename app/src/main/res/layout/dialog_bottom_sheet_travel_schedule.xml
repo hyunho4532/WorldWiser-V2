@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheetDashBoardLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:behavior_hideable="true"
+    app:behavior_draggable="true"
+    android:background="@color/white"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_nickname_auth_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_travel_schedule_check_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:text="1. 일정이 진행되었나요?"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_nickname_auth_schedule"
+                app:layout_constraintTop_toBottomOf="@+id/tv_nickname_auth_schedule" />
+
+            <com.sigma.niceswitch.NiceSwitch
+                android:id="@+id/switcher_travel_schedule_check"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                app:switcher_icon_color="@color/switcher_icon_color"
+                app:switcher_off_color="@color/switcher_off_color"
+                app:switcher_on_color="@color/switcher_on_color"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_travel_schedule_check_title"
+                app:layout_constraintStart_toEndOf="@+id/tv_travel_schedule_check_title"
+                app:layout_constraintTop_toTopOf="@+id/tv_travel_schedule_check_title" />
+
+            <TextView
+                android:id="@+id/tv_travel_schedule_picker_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="90dp"
+                android:text="2. 시간을 입력해주세요"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_nickname_auth_schedule"
+                app:layout_constraintTop_toBottomOf="@+id/tv_travel_schedule_check_title" />
+
+            <TimePicker
+                android:id="@+id/tp_travel_schedule"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="start"
+                android:timePickerMode="spinner"
+                app:layout_constraintStart_toStartOf="@+id/tv_travel_schedule_picker_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_travel_schedule_picker_title" />
+
+            <TextView
+                android:id="@+id/tv_travel_schedule_todo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="3. 할 일을 작성해주세요"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tp_travel_schedule"
+                app:layout_constraintTop_toBottomOf="@+id/tp_travel_schedule" />
+
+            <TextView
+                android:id="@+id/tv_travel_schedule_status_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:text="4. 카테고리를 선택해주세요"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/et_travel_schedule_todo"
+                app:layout_constraintTop_toBottomOf="@+id/et_travel_schedule_todo" />
+
+            <EditText
+                android:id="@+id/et_travel_schedule_todo"
+                android:layout_width="350dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/drawable_schedule_calendar"
+                android:hint="할 일을 작성해주세요!"
+                android:paddingLeft="8dp"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/tp_travel_schedule"
+                app:layout_constraintTop_toBottomOf="@+id/tv_travel_schedule_todo_title" />
+
+            <com.skydoves.powerspinner.PowerSpinnerView
+                android:id="@+id/powerSpinnerView"
+                android:layout_width="360dp"
+                android:layout_height="50dp"
+                android:layout_margin="16dp"
+                android:layout_marginTop="24dp"
+                android:gravity="start"
+                android:hint="원하시는 카테고리를 선택해주세요!"
+                android:paddingStart="8dp"
+                android:paddingTop="12dp"
+                android:textAppearance="@style/Theme.WorldWiser.VerificationActivity_PowerSpinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_travel_schedule_status_title"
+                app:spinner_divider_color="@color/powerSpinnerDividerColor"
+                app:spinner_divider_show="true"
+                app:spinner_divider_size="0.4dp"
+                app:spinner_item_array="@array/schedule_todo_status"
+                app:spinner_item_height="46dp"
+                app:spinner_popup_animation="dropdown"
+                app:spinner_popup_background="@color/powerSpinnerBackgroundColor"
+                app:spinner_popup_elevation="14dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_schedule_datePicker_insert"
+                android:layout_width="416dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="48dp"
+                android:background="@drawable/drawable_schedule_insert_button"
+                android:paddingBottom="6dp"
+                android:text="날짜 등록하기"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.483"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/powerSpinnerView" />
+
+            <TextView
+                android:id="@+id/tv_travel_schedule_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/powerSpinnerView"
+                app:layout_constraintTop_toBottomOf="@+id/tv_day_schedule" />
+
+            <TextView
+                android:id="@+id/tv_day_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/powerSpinnerView"
+                app:layout_constraintTop_toBottomOf="@+id/powerSpinnerView" />
+
+            <TextView
+                android:id="@+id/switcher_travel_schedule_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="진행 완료"
+                app:layout_constraintBottom_toBottomOf="@+id/switcher_travel_schedule_check"
+                app:layout_constraintStart_toEndOf="@+id/switcher_travel_schedule_check"
+                app:layout_constraintTop_toTopOf="@+id/switcher_travel_schedule_check" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

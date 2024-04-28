@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "688278247605",
+    "project_id": "worldwiser-a95ad",
+    "storage_bucket": "worldwiser-a95ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688278247605:android:dc98ac260419f24a7986fc",
+        "android_client_info": {
+          "package_name": "com.hyun.worldwiser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688278247605-pa3aq47ofpf33mutpt1n7q4g86bgevu8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hyun.worldwiser",
+            "certificate_hash": "109298feb817a01739e882f845d43a3d25c2a7f7"
+          }
+        },
+        {
+          "client_id": "688278247605-ubs9glqnm8m70doo43h83lvqnfov120j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANTvo6PxIHMVywG1lmUbqFLDQHuhngnf8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688278247605-ubs9glqnm8m70doo43h83lvqnfov120j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
