@@ -21,13 +21,18 @@ import com.hyun.worldwiser.R
 
 class TourMapFragment : Fragment(), OnMapReadyCallback {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private lateinit var mGoogleMap: GoogleMap
 
-        MapsInitializer.initialize(requireContext())
+    @Deprecated("Deprecated in Java")
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val tourMapView = view?.findViewById<MapView>(R.id.google_map_view)
+        tourMapView?.onCreate(savedInstanceState)
+        tourMapView?.onResume()
+        tourMapView?.getMapAsync(this)
     }
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,21 +40,9 @@ class TourMapFragment : Fragment(), OnMapReadyCallback {
         return inflater.inflate(R.layout.fragment_tour_map, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val tourMapView = view.findViewById<MapView>(R.id.google_map_view)
-        tourMapView.getMapAsync(this)
-        tourMapView.onCreate(savedInstanceState)
-    }
-
     override fun onMapReady(googleMap: GoogleMap) {
-        googleMap.addMarker(
-            MarkerOptions()
-                .position(LatLng(0.0, 0.0))
-                .title("Marker")
-        )
-        googleMap.setMinZoomPreference(15.0f)
-        googleMap.setMaxZoomPreference(20.0f)
+        googleMap.let {
+            mGoogleMap = it
+        }
     }
 }
