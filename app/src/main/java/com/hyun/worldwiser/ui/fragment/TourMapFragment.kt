@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.GsonBuilder
 import com.hyun.worldwiser.R
+import com.hyun.worldwiser.model.TourSpots
 import com.hyun.worldwiser.model.tourSpots.Item
 import com.hyun.worldwiser.model.tourSpots.Tour
 import com.hyun.worldwiser.viewmodel.GoogleMapLocationViewModel
@@ -38,6 +39,7 @@ class TourMapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var googleMapLocationViewModel: GoogleMapLocationViewModel
+    private lateinit var tourSpotsPopularList: ArrayList<TourSpots>
 
     private lateinit var currentLocation: Location
     private var googleMarkerList: List<Item> = emptyList()
@@ -119,7 +121,7 @@ class TourMapFragment : Fragment(), OnMapReadyCallback {
         if (::currentLocation.isInitialized) {
             googleMarkerList.forEach { item ->
 
-                Log.d("TourMapFragment", item.mapx.toString())
+                Log.d("TourMapFragment", item.mapx)
 
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(item.mapy.toDouble(), item.mapx.toDouble()), 15.0f))
 
@@ -128,6 +130,12 @@ class TourMapFragment : Fragment(), OnMapReadyCallback {
                         .position(LatLng(item.mapy.toDouble(), item.mapx.toDouble()))
                         .title(item.title)
                 )
+
+                val tourSpots = TourSpots(item.title, item.addr1, item.firstimage)
+
+                tourSpotsPopularList.add(tourSpots)
+
+
             }
         }
     }
