@@ -1,21 +1,22 @@
 package com.hyun.worldwiser.ui.fragment
 
 import TourLocationApiService
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.GsonBuilder
@@ -28,6 +29,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
+
 
 class TourMapFragment : Fragment(), OnMapReadyCallback {
 
@@ -59,17 +64,17 @@ class TourMapFragment : Fragment(), OnMapReadyCallback {
         }
 
         if (::currentLocation.isInitialized) {
-            Log.d("TourMapFragment", currentLocation.longitude.toString())
+            Log.d("TourMapFragment", currentLocation.latitude.toString())
         }
 
         if (::currentLocation.isInitialized) {
             tourLocationApiService.getLocationBasedList (
-                serviceKey = "04DBvw1Cg29V1OVRIBBuWWtdWD%2BJR56nz6mzbsQeyGILb7K4QmN78QipJNAdeG%2BNQPovWEPNwnkpYq1OHVLhZA%3D%3D", numOfRows = 10,
-                pageNo = 1, mobileOS = "AND",
+                numOfRows = 10, pageNo = 1, mobileOS = "AND",
                 mobileApp = "AppTest", listYN = "Y",
-                arrange = "A", mapX = currentLocation.longitude,
-                mapY = currentLocation.latitude, radius = 2000,
-                contentTypeId = 15).enqueue(object: Callback<Tour> {
+                arrange = "A", mapX = currentLocation.longitude.toString(),
+                mapY = currentLocation.latitude.toString(),
+                radius = "2000", serviceKey = "04DBvw1Cg29V1OVRIBBuWWtdWD+JR56nz6mzbsQeyGILb7K4QmN78QipJNAdeG+NQPovWEPNwnkpYq1OHVLhZA==",
+            ).enqueue(object: Callback<Tour> {
 
                 override fun onResponse(call: Call<Tour>, response: Response<Tour>) {
                     if (response.isSuccessful) {
@@ -113,11 +118,14 @@ class TourMapFragment : Fragment(), OnMapReadyCallback {
     private fun showMarkerOnMap(googleMap: GoogleMap) {
         if (::currentLocation.isInitialized) {
             googleMarkerList.forEach { item ->
-                val position = LatLng(item.mapy.toDouble(), item.mapx.toDouble())
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15.0f))
+
+                Log.d("TourMapFragment", item.mapx.toString())
+
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(item.mapy.toDouble(), item.mapx.toDouble()), 15.0f))
+
                 googleMap.addMarker(
                     MarkerOptions()
-                        .position(position)
+                        .position(LatLng(item.mapy.toDouble(), item.mapx.toDouble()))
                         .title(item.title)
                 )
             }
