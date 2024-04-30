@@ -41,6 +41,14 @@ class TourSpotsPopularAdapter (
 
             itemView.findViewById<TextView>(R.id.tv_tour_spot_title).text = tourSpots.title
             itemView.findViewById<TextView>(R.id.tv_tour_spot_address).text = tourSpots.address
+
+            itemView.setOnClickListener {
+                showTourSpotsPopularInsertDialog()
+            }
         }
+    }
+
+    private fun showTourSpotsPopularInsertDialog() {
+        val bu
     }
 }

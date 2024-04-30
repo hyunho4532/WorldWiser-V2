@@ -17,5 +17,6 @@ interface TourLocationApiService {
         @Query("mapX") mapX: String,
         @Query("mapY") mapY: String,
         @Query("radius") radius: String,
+        @Query("contentTypeId") contentTypeId: String,
     ): Call<Tour>
 }

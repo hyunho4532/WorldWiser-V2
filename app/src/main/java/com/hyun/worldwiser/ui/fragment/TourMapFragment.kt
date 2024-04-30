@@ -74,6 +74,7 @@ class TourMapFragment : Fragment(), OnMapReadyCallback {
                 arrange = "A", mapX = currentLocation.longitude.toString(),
                 mapY = currentLocation.latitude.toString(),
                 radius = "3000", serviceKey = "04DBvw1Cg29V1OVRIBBuWWtdWD+JR56nz6mzbsQeyGILb7K4QmN78QipJNAdeG+NQPovWEPNwnkpYq1OHVLhZA==",
+                contentTypeId = "12"
             ).enqueue(object: Callback<Tour> {
 
                 override fun onResponse(call: Call<Tour>, response: Response<Tour>) {
@@ -128,7 +129,7 @@ class TourMapFragment : Fragment(), OnMapReadyCallback {
 
                     uniqueItemSet.add(item.title)
 
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(item.mapy.toDouble(), item.mapx.toDouble()), 15.0f))
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(item.mapy.toDouble(), item.mapx.toDouble()), 10.0f))
 
                     googleMap.addMarker (
                         MarkerOptions()

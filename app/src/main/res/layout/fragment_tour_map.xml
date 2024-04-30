@@ -8,7 +8,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_popular_spots"
-        android:layout_width="300dp"
+        android:layout_width="360dp"
         android:layout_height="280dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
@@ -23,7 +23,7 @@
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/google_map_view"
-                android:layout_width="280dp"
+                android:layout_width="340dp"
                 android:layout_height="260dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_popular_spots_list"
-        android:layout_width="320dp"
+        android:layout_width="360dp"
         android:layout_height="360dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
