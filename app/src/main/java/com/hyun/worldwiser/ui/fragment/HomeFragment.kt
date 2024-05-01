@@ -67,11 +67,6 @@ class HomeFragment : Fragment() {
 
         fragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        fragmentHomeBinding.btnTravelInsert.setOnClickListener {
-            val intent = Intent(requireActivity(), InsertActivity::class.java)
-            startActivity(intent)
-        }
-
         val homeFragmentTitleFilter: HomeFragmentTitleFilter = HomeFragmentTitleFilter(fragmentHomeBinding)
         homeFragmentTitleFilter.homeFragmentTitleSettings()
 
@@ -130,36 +125,6 @@ class HomeFragment : Fragment() {
                         fragmentHomeBinding.rvTravelRanking.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                         fragmentHomeBinding.rvTravelRanking.adapter = countryRankingAdapter
                     }
-                }
-            }
-
-        db.collection("verifications")
-            .document(auth.currentUser!!.uid)
-            .get()
-            .addOnSuccessListener { document  ->
-
-                val favoriteCountry = document["country_favorite"].toString()
-                val nickname = document["nickname"].toString()
-                val transport = document["transport"].toString()
-
-                fragmentHomeBinding.tvTravelInformationNickname.text = nickname
-                fragmentHomeBinding.tvTravelInformationFavoriteCountry.text = favoriteCountry
-                fragmentHomeBinding.tvTravelInformationPreferenceTransport.text = transport
-
-                (nickname + "님의 관한 여행 정보").also { nicknameResult ->
-                    fragmentHomeBinding.tvTravelInformation.text = nicknameResult
-                }
-            }
-
-        db.collection("travelInserts").whereEqualTo("authUid", auth.currentUser!!.uid).get()
-            .addOnSuccessListener { querySnapshot  ->
-
-                val documentCount = querySnapshot.size()
-
-                for (document in querySnapshot.documents) {
-
-                    (documentCount.toString() + "개").also { documentCountResult ->
-                        fragmentHomeBinding.tvTravelInformationCount.text = documentCountResult }
                 }
             }
 
@@ -222,11 +187,6 @@ class HomeFragment : Fragment() {
                 Log.d("ERROR", t.message.toString())
             }
         })
-
-        fragmentHomeBinding.tvOutlookAnalysis.setOnClickListener {
-            val intent = Intent(context, TrendAnalysisActivity::class.java)
-            startActivity(intent)
-        }
 
         return fragmentHomeBinding.root
     }

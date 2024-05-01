@@ -139,6 +139,19 @@ class ProfileFragment : Fragment() {
                 }
             }
 
+        db.collection("verifications").whereEqualTo("authUid", auth.currentUser!!.uid).get()
+            .addOnSuccessListener { querySnapshot ->
+                for (document in querySnapshot.documents) {
+                    val userNickname = document["nickname"].toString()
+                    val userTravelType = document["travel_preferences"].toString()
+                    val userFavoriteCountry = document["country_favorite"].toString()
+
+                    fragmentProfileBinding.tvProfileNickname.text = userNickname
+                    fragmentProfileBinding.tvProfileTravelType.text = "선호하는 여행 타입: $userTravelType"
+                    fragmentProfileBinding.tvProfileTravelTransport.text = "좋아하는 나라: $userFavoriteCountry"
+                }
+            }
+
         fragmentProfileBinding.btnUserLogout.setOnClickListener {
             auth.signOut()
 

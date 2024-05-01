@@ -57,7 +57,8 @@ class VerificationActivity : AppCompatActivity() {
                 countriesString,
                 activityVerificationBinding.powerSpinnerView.text.toString(),
                 activityVerificationBinding.powerSpinnerView2.text.toString(),
-                activityVerificationBinding.etNicknameTextFormField.text.toString()
+                activityVerificationBinding.etNicknameTextFormField.text.toString(),
+                ""
             )
 
             verificationInsertViewModel.insertVerification(verification)

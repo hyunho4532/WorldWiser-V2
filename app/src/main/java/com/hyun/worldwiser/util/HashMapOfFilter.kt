@@ -6,7 +6,8 @@ class HashMapOfFilter {
         countryFavorite: String,
         travelPreferences: String,
         transport: String,
-        nickname: String
+        nickname: String,
+        profileUrl: String,
     ): HashMap<String, String> {
 
         return hashMapOf(
@@ -14,7 +15,8 @@ class HashMapOfFilter {
             "country_favorite" to countryFavorite,
             "travel_preferences" to travelPreferences,
             "transport" to transport,
-            "nickname" to nickname
+            "nickname" to nickname,
+            "profileUrl" to profileUrl,
         )
     }
 }
