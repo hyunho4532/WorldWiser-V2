@@ -18,7 +18,7 @@ class TourSpotsPopularRepository {
         )
 
         firebaseStore.collection("tourSpots").add(popularSpots).addOnSuccessListener {
-            
+
         }
     }
 }

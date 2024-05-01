@@ -115,36 +115,6 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/travelRecyclerView"
-                android:layout_width="300dp"
-                android:layout_height="423dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="@+id/textView12"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="현호님에 관한 여행 정보"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/cardView6"
-                app:layout_constraintTop_toBottomOf="@+id/cardView6" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_marginTop="12dp"
-                android:text="TextView"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="@+id/travelRecyclerView"
-                app:layout_constraintStart_toStartOf="@+id/travelRecyclerView"
-                app:layout_constraintTop_toBottomOf="@+id/travelRecyclerView" />
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView6"
                 android:layout_width="300dp"
@@ -183,6 +153,55 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="현호님에 관한 여행 정보"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/cardView6"
+                app:layout_constraintTop_toBottomOf="@+id/cardView6" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/travelRecyclerView"
+                android:layout_width="300dp"
+                android:layout_height="320dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@+id/textView12"
+                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+            <TextView
+                android:id="@+id/tv_popular_spots_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="최근 현호님이 등록한 관광지 목록"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/travelRecyclerView"
+                app:layout_constraintTop_toBottomOf="@+id/travelRecyclerView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/popularSpotsRecyclerView"
+                android:layout_width="300dp"
+                android:layout_height="320dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@+id/tv_popular_spots_information"
+                app:layout_constraintTop_toBottomOf="@+id/tv_popular_spots_information" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginTop="16dp"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@+id/popularSpotsRecyclerView"
+                app:layout_constraintStart_toStartOf="@+id/popularSpotsRecyclerView"
+                app:layout_constraintTop_toBottomOf="@+id/popularSpotsRecyclerView" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
