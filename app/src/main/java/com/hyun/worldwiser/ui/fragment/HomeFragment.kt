@@ -146,7 +146,7 @@ class HomeFragment : Fragment() {
                 fragmentHomeBinding.tvTravelInformationFavoriteCountry.text = favoriteCountry
                 fragmentHomeBinding.tvTravelInformationPreferenceTransport.text = transport
 
-                (nickname + "의 관한 여행 정보").also { nicknameResult ->
+                (nickname + "님의 관한 여행 정보").also { nicknameResult ->
                     fragmentHomeBinding.tvTravelInformation.text = nicknameResult
                 }
             }
