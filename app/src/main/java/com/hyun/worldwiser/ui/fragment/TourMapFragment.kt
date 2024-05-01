@@ -140,7 +140,7 @@ class TourMapFragment : Fragment(), OnMapReadyCallback {
             }
 
             val rvPopularSpotsList = view?.findViewById<RecyclerView>(R.id.rv_popular_spots_list)
-            rvPopularSpotsList?.adapter = TourSpotsPopularAdapter(requireContext(), tourSpotsPopularList, viewLifecycleOwner)
+            rvPopularSpotsList?.adapter = TourSpotsPopularAdapter(requireContext(), tourSpotsPopularList, googleMapLocationViewModel, viewLifecycleOwner)
             rvPopularSpotsList?.layoutManager = LinearLayoutManager(requireContext())
         }
     }

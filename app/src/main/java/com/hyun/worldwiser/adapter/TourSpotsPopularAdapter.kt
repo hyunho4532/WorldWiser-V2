@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.hyun.worldwiser.R
@@ -19,10 +20,9 @@ import com.hyun.worldwiser.viewmodel.GoogleMapLocationViewModel
 class TourSpotsPopularAdapter(
     private val context: Context,
     private val tourSpotsPopularList: List<TourSpots>,
+    private val googleMapLocationViewModel: GoogleMapLocationViewModel,
     private val viewLifecycleOwner: LifecycleOwner
 ) : RecyclerView.Adapter<TourSpotsPopularAdapter.ViewHolder>() {
-
-    private val googleMapLocationViewModel: GoogleMapLocationViewModel = GoogleMapLocationViewModel(context, null)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_tour_spots_list, parent, false)
@@ -38,7 +38,7 @@ class TourSpotsPopularAdapter(
         holder.bind(spotsPopularItem)
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(val itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(tourSpots: TourSpots) {
 
@@ -51,9 +51,7 @@ class TourSpotsPopularAdapter(
             itemView.findViewById<TextView>(R.id.tv_tour_spot_address).text = tourSpots.address
 
             itemView.setOnClickListener {
-                googleMapLocationViewModel.userSpotsPopularTitle.postValue(tourSpots.title)
-                googleMapLocationViewModel.userSpotsPopularAddress.postValue(tourSpots.address)
-                googleMapLocationViewModel.userSpotsPopularImage.postValue(tourSpots.imageUrl)
+                googleMapLocationViewModel.setSpotsPopularInsertData(tourSpots.title, tourSpots.address, tourSpots.imageUrl)
 
                 showTourSpotsPopularInsertDialog()
             }
@@ -68,24 +66,26 @@ class TourSpotsPopularAdapter(
             false
         )
 
-        googleMapLocationViewModel.userSpotsPopularTitle.observe(viewLifecycleOwner) { title ->
-            dialogView.tvTourSpotDialogTitle.text = title.toString()
-        }
+        dialogView.lifecycleOwner = viewLifecycleOwner
 
-        googleMapLocationViewModel.userSpotsPopularAddress.observe(viewLifecycleOwner) { address ->
-            dialogView.tvTourSpotDialogAddress.text = address.toString()
-        }
-
-        googleMapLocationViewModel.userSpotsPopularImage.observe(viewLifecycleOwner) { image ->
-            Glide.with(context)
-                .load(image)
-                .into(dialogView.tvTourSpotDialogImageUrl)
-        }
+        dialogView.userSpotsPopularModel = googleMapLocationViewModel
 
         val builder = AlertDialog.Builder(context)
             .setView(dialogView.root)
 
         val tourSpotsDialog = builder.create()
         tourSpotsDialog.show()
+
+        googleMapLocationViewModel.popularSpotsData.observe(viewLifecycleOwner) { popularSpotsData ->
+            Glide.with(context)
+                .load(popularSpotsData.imageUrl)
+                .into(dialogView.ivTourSpotDialogImageUrl)
+
+            dialogView.btnTourSpotInsert.setOnClickListener {
+                tourSpotsDialog.dismiss()
+
+                googleMapLocationViewModel.setSpotsPopularInsertDatabase(popularSpotsData.title, popularSpotsData.address, popularSpotsData.imageUrl)
+            }
+        }
     }
 }
