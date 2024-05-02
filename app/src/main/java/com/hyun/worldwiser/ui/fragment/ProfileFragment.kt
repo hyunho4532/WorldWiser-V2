@@ -1,14 +1,19 @@
 package com.hyun.worldwiser.ui.fragment
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -16,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.hyun.worldwiser.R
 import com.hyun.worldwiser.adapter.TravelAdapter
 import com.hyun.worldwiser.adapter.TravelSwipeToDeleteCallback
@@ -41,6 +47,7 @@ class ProfileFragment : Fragment() {
     private val adapterFilter: AdapterFilter = AdapterFilter()
 
     private val db = FirebaseFirestore.getInstance()
+    private val storage = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
     private lateinit var country: String
@@ -52,6 +59,8 @@ class ProfileFragment : Fragment() {
     private lateinit var popularSpotsImageUrl: String
     private lateinit var spotsAddress: String
 
+    private val pickImageRequest = 1
+
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +71,7 @@ class ProfileFragment : Fragment() {
 
         val travelList = ArrayList<Travel>()
         val popularTourSpotsList = ArrayList<UserTourSpots>()
+
 
         fragmentProfileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
 
@@ -141,14 +151,22 @@ class ProfileFragment : Fragment() {
 
         db.collection("verifications").whereEqualTo("authUid", auth.currentUser!!.uid).get()
             .addOnSuccessListener { querySnapshot ->
-                for (document in querySnapshot.documents) {
-                    val userNickname = document["nickname"].toString()
-                    val userTravelType = document["travel_preferences"].toString()
-                    val userFavoriteCountry = document["country_favorite"].toString()
 
-                    fragmentProfileBinding.tvProfileNickname.text = userNickname
-                    fragmentProfileBinding.tvProfileTravelType.text = "선호하는 여행 타입: $userTravelType"
-                    fragmentProfileBinding.tvProfileTravelTransport.text = "좋아하는 나라: $userFavoriteCountry"
+                for (document in querySnapshot.documents) {
+                    if (isAdded) {
+                        val userNickname = document["nickname"].toString()
+                        val userTravelType = document["travel_preferences"].toString()
+                        val userFavoriteCountry = document["country_favorite"].toString()
+                        val userProfileImage = document["profileUrl"].toString()
+
+                        fragmentProfileBinding.tvProfileNickname.text = userNickname
+                        fragmentProfileBinding.tvProfileTravelType.text = "선호하는 여행 타입: $userTravelType"
+                        fragmentProfileBinding.tvProfileTravelTransport.text = "좋아하는 나라: $userFavoriteCountry"
+
+                        Glide.with(requireContext())
+                            .load(userProfileImage)
+                            .into(fragmentProfileBinding.ivProfileUser)
+                    }
                 }
             }
 
@@ -159,11 +177,34 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
+        fragmentProfileBinding.ivProfileGallery.setOnClickListener {
+            Log.d("ProfileFragment", "클릭")
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent, pickImageRequest)
+        }
 
         return fragmentProfileBinding.root
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == pickImageRequest && resultCode == Activity.RESULT_OK && data != null) {
+            val selectedImageUri: Uri? = data.data
+
+            db.collection("verifications")
+                .document(auth.currentUser!!.uid)
+                .update("profileUrl", selectedImageUri)
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "프로필 이미지가 정상적으로 등록되었습니다!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "프로필 이미지가 등록되지 않았습니다!", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 }

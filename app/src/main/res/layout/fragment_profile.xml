@@ -118,7 +118,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView6"
                 android:layout_width="300dp"
-                android:layout_height="180dp"
+                android:layout_height="260dp"
                 android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="@+id/cardView2"
                 app:layout_constraintStart_toStartOf="@+id/cardView2"
@@ -129,9 +129,9 @@
                     android:layout_height="match_parent">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/circleImageView"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:id="@+id/iv_profile_user"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_marginTop="16dp"
                         android:src="@drawable/drawable_profile_user"
                         app:civ_border_color="#FF000000"
@@ -141,34 +141,34 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/imageView11"
+                        android:id="@+id/iv_profile_gallery"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-                        app:layout_constraintEnd_toEndOf="@+id/circleImageView"
+                        app:layout_constraintBottom_toBottomOf="@+id/iv_profile_user"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_profile_user"
                         app:srcCompat="@drawable/drawable_profile_user_image" />
 
                     <TextView
                         android:id="@+id/tv_profile_nickname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="8dp"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@+id/circleImageView"
-                        app:layout_constraintStart_toStartOf="@+id/circleImageView"
-                        app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+                        app:layout_constraintEnd_toEndOf="@+id/iv_profile_user"
+                        app:layout_constraintStart_toStartOf="@+id/iv_profile_user"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_profile_user" />
 
                     <TextView
                         android:id="@+id/tv_profile_travel_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="32dp"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_nickname" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_travel_count" />
 
                     <TextView
                         android:id="@+id/tv_profile_travel_transport"
@@ -178,6 +178,16 @@
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="@+id/tv_profile_travel_type"
                         app:layout_constraintTop_toBottomOf="@+id/tv_profile_travel_type" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_travel_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_profile_nickname"
+                        app:layout_constraintStart_toStartOf="@+id/tv_profile_nickname"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_nickname" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
