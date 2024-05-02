@@ -183,11 +183,27 @@
                         android:id="@+id/tv_profile_travel_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="TextView"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_profile_travel_space"
                         app:layout_constraintEnd_toEndOf="@+id/tv_profile_nickname"
-                        app:layout_constraintStart_toStartOf="@+id/tv_profile_nickname"
+                        app:layout_constraintStart_toStartOf="@+id/iv_profile_user" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_travel_space"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="："
+                        app:layout_constraintEnd_toStartOf="@+id/tv_profile_travel_follower_count"
+                        app:layout_constraintStart_toEndOf="@+id/tv_profile_travel_count"
                         app:layout_constraintTop_toBottomOf="@+id/tv_profile_nickname" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_travel_follower_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_profile_travel_space"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_profile_user"
+                        app:layout_constraintStart_toEndOf="@+id/tv_profile_nickname" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

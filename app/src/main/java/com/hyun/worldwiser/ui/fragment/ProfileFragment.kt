@@ -166,6 +166,13 @@ class ProfileFragment : Fragment() {
                         Glide.with(requireContext())
                             .load(userProfileImage)
                             .into(fragmentProfileBinding.ivProfileUser)
+
+                        db.collection("travelRecommends").whereEqualTo("travelRecommendAuthUid", auth.currentUser!!.uid).get()
+                            .addOnSuccessListener { travelInserts ->
+                                if (isAdded) {
+                                    fragmentProfileBinding.tvProfileTravelCount.text = "여행 개수: ${travelInserts.count()}"
+                                }
+                            }
                     }
                 }
             }
