@@ -1,7 +1,6 @@
 package com.hyun.worldwiser.ui.fragment
 
 import TourApiService
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,23 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.GsonBuilder
 import com.hyun.worldwiser.R
 import com.hyun.worldwiser.adapter.CountryRankingAdapter
-import com.hyun.worldwiser.adapter.HomeTravelRecommendAdapter
 import com.hyun.worldwiser.adapter.TourSpotsAdapter
 import com.hyun.worldwiser.adapter.TravelStatusAdapter
 import com.hyun.worldwiser.databinding.FragmentHomeBinding
 import com.hyun.worldwiser.model.CountryRanking
-import com.hyun.worldwiser.model.HomeTravelRecommend
 import com.hyun.worldwiser.model.TravelStatus
 import com.hyun.worldwiser.model.spots.Root
-import com.hyun.worldwiser.ui.travel.InsertActivity
-import com.hyun.worldwiser.ui.trend.TrendAnalysisActivity
 import com.hyun.worldwiser.util.HomeFragmentTitleFilter
+import com.hyun.worldwiser.viewmodel.TravelRecommendSelectViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,11 +33,9 @@ class HomeFragment : Fragment() {
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
 
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private val countryRankingList = ArrayList<CountryRanking>()
     private val travelStatusList = ArrayList<TravelStatus>()
-    private val travelRecommendList = ArrayList<HomeTravelRecommend>()
 
     private val uniqueCountries = HashSet<String>()
 
@@ -67,31 +61,14 @@ class HomeFragment : Fragment() {
 
         fragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        val homeFragmentTitleFilter: HomeFragmentTitleFilter = HomeFragmentTitleFilter(fragmentHomeBinding)
+        val homeFragmentTitleFilter = HomeFragmentTitleFilter(fragmentHomeBinding)
         homeFragmentTitleFilter.homeFragmentTitleSettings()
 
-        db.collection("travelRecommends")
-            .get()
-            .addOnSuccessListener { querySnapshot  ->
+        val travelRecommendInsertViewModel = ViewModelProvider(this)[TravelRecommendSelectViewModel::class.java]
 
-                if (isAdded) {
-                    val context = activity?.applicationContext
-                    for (document in querySnapshot.documents) {
-                        val travelRecommendCountry = document["travelRecommendCountry"].toString()
-                        val travelRecommendNickname = document["travelRecommendNickname"].toString()
-
-                        if (travelRecommendCountry.isNotEmpty()) {
-
-                            travelRecommendList.add(HomeTravelRecommend(travelRecommendCountry, travelRecommendNickname))
-                        }
-                    }
-
-                    val homeTravelRecommendAdapter = HomeTravelRecommendAdapter(context, travelRecommendList)
-
-                    fragmentHomeBinding.rvRecommendStatus.adapter = homeTravelRecommendAdapter
-                    fragmentHomeBinding.rvRecommendStatus.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                }
-            }
+        travelRecommendInsertViewModel.travelRecommendSelect(isAdded, requireContext(), fragmentHomeBinding) { viewModelSuccess ->
+            Log.d("HomeFragment", viewModelSuccess)
+        }
 
         db.collection("travelInserts")
             .get()
@@ -189,12 +166,5 @@ class HomeFragment : Fragment() {
         })
 
         return fragmentHomeBinding.root
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        travelRecommendList.clear()
     }
 }
