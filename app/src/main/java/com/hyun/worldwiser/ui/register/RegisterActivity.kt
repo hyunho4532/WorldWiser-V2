@@ -43,8 +43,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    private val RC_SIGN_IN = 20
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
