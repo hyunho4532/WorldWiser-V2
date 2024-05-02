@@ -15,11 +15,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.hyun.worldwiser.FirebaseStorageManager
 import com.hyun.worldwiser.R
 import com.hyun.worldwiser.databinding.ActivityRecommendBinding
 import com.hyun.worldwiser.model.TravelRecommend
 import com.hyun.worldwiser.type.SelectedImageType
+import com.hyun.worldwiser.viewmodel.ProfileInformationViewModel
 import com.hyun.worldwiser.viewmodel.VerificationSelectViewModel
 import java.security.PrivateKey
 
@@ -28,6 +30,7 @@ class RecommendActivity : AppCompatActivity() {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private lateinit var activityRecommendBinding: ActivityRecommendBinding
     private val recommendTravelList: ArrayList<TravelRecommend>  = ArrayList()
+    private lateinit var profileInformationViewModel: ProfileInformationViewModel
 
     private var imageUri: Uri? = null
     private lateinit var selectedImageType: SelectedImageType
@@ -35,6 +38,8 @@ class RecommendActivity : AppCompatActivity() {
     private var travelRecommendImageUrlBitmapFirst: Bitmap? = null
     private var travelRecommendImageUrlBitmapSecond: Bitmap? = null
     private lateinit var travelRecommendAuthNickname: String
+
+    private lateinit var profileUrl: String
 
     private val firebaseStorageManager = FirebaseStorageManager()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -44,6 +49,7 @@ class RecommendActivity : AppCompatActivity() {
         activityRecommendBinding = DataBindingUtil.setContentView(this, R.layout.activity_recommend)
 
         val verificationSelectViewModel: VerificationSelectViewModel = ViewModelProvider(this)[VerificationSelectViewModel::class.java]
+        profileInformationViewModel = ViewModelProvider(this)[ProfileInformationViewModel::class.java]
 
         activityRecommendBinding.ivTravelRecommendGalleryFirst.setOnClickListener {
 
@@ -94,6 +100,15 @@ class RecommendActivity : AppCompatActivity() {
 
         activityRecommendBinding.btnTravelRecommendInsert.setOnClickListener {
 
+            db.collection("verifications").whereEqualTo("authUid", auth.currentUser!!.uid).get()
+                .addOnSuccessListener { querySnapshot ->
+                    for (document in querySnapshot) {
+                        profileUrl = document["profileUrl"].toString()
+
+                        Log.d("RecommendActivity", profileUrl)
+                    }
+                }
+
             val bitmaps = mutableListOf<Bitmap?>()
 
             if (travelRecommendImageUrlBitmapFirst != null && travelRecommendImageUrlBitmapSecond == null) {
@@ -131,7 +146,8 @@ class RecommendActivity : AppCompatActivity() {
                     },
 
                     "travelRecommendAloneStatus" to travelRecommendAloneStatus,
-                    "travelRecommendFavoriteCount" to travelRecommendFavoriteCount
+                    "travelRecommendFavoriteCount" to travelRecommendFavoriteCount,
+                    "travelRecommendProfileUrl" to profileUrl,
                 )
 
                 Log.d("RecommendActivityImageUrl", imageUrls.toString())

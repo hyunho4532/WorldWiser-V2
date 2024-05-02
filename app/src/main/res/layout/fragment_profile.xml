@@ -118,7 +118,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView6"
                 android:layout_width="300dp"
-                android:layout_height="120dp"
+                android:layout_height="260dp"
                 android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="@+id/cardView2"
                 app:layout_constraintStart_toStartOf="@+id/cardView2"
@@ -128,27 +128,74 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_profile_user"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/drawable_profile_user"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/iv_profile_gallery"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/iv_profile_user"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_profile_user"
+                        app:srcCompat="@drawable/drawable_profile_user_image" />
+
                     <TextView
-                        android:id="@+id/textView14"
+                        android:id="@+id/tv_profile_nickname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="아직 프로필 기능은 구현하지 못했습니다 ㅠㅠ"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+                        app:layout_constraintEnd_toEndOf="@+id/iv_profile_user"
+                        app:layout_constraintStart_toStartOf="@+id/iv_profile_user"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_profile_user" />
 
-                    <ImageView
-                        android:id="@+id/imageView11"
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"
-                        android:layout_marginTop="6dp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                    <TextView
+                        android:id="@+id/tv_profile_travel_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="32dp"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/drawable_profile_lock_icon" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_travel_count" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_travel_transport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="@+id/tv_profile_travel_type"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_travel_type" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_travel_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="60dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_nickname" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_travel_follower_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="60dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_nickname" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

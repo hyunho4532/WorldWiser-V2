@@ -10,7 +10,6 @@ import com.hyun.worldwiser.adapter.CountryAdapter
 import com.hyun.worldwiser.databinding.ActivityVerificationBinding
 import com.hyun.worldwiser.model.Country
 import com.hyun.worldwiser.ui.MainActivity
-import com.hyun.worldwiser.util.HashMapOfFilter
 import com.hyun.worldwiser.util.IntentFilter
 import com.hyun.worldwiser.util.SnackBarFilter
 import com.hyun.worldwiser.viewmodel.VerificationInsertViewModel
@@ -23,7 +22,6 @@ class VerificationActivity : AppCompatActivity() {
     private lateinit var activityVerificationBinding: ActivityVerificationBinding
 
     private val snackBarFilter: SnackBarFilter = SnackBarFilter()
-    private val hashMapOf: HashMapOfFilter = HashMapOfFilter()
     private val intentFilter: IntentFilter = IntentFilter()
     private val mainActivity: MainActivity = MainActivity()
 
@@ -52,15 +50,7 @@ class VerificationActivity : AppCompatActivity() {
 
             val countriesString = countryList.joinToString(", ") { it.countryFavorite }
 
-            val verification = hashMapOf.insertVerificationDataFromMap (
-                auth.currentUser!!.uid,
-                countriesString,
-                activityVerificationBinding.powerSpinnerView.text.toString(),
-                activityVerificationBinding.powerSpinnerView2.text.toString(),
-                activityVerificationBinding.etNicknameTextFormField.text.toString()
-            )
-
-            verificationInsertViewModel.insertVerification(verification)
+            verificationInsertViewModel.insertVerification(countriesString, activityVerificationBinding, auth)
         }
 
         verificationInsertViewModel.verificationResults.observe(this) { success ->
