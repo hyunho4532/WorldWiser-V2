@@ -9,5 +9,6 @@ data class TravelRecommend(
     val travelRecommendImageUrl: String?,
     val travelAloneStatus: String,
     val travelRecommendImpression: String,
-    val travelRecommendFavoriteCount: Int
+    val travelRecommendFavoriteCount: Int,
+    val travelRecommendProfileUrl: String,
 )

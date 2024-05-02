@@ -8,15 +8,17 @@ class HashMapOfFilter {
         transport: String,
         nickname: String,
         profileUrl: String,
-    ): HashMap<String, String> {
+        followerCount: Int
+    ): HashMap<String, Any> {
 
-        return hashMapOf(
+        return hashMapOf (
             "authUid" to authUid,
             "country_favorite" to countryFavorite,
             "travel_preferences" to travelPreferences,
             "transport" to transport,
             "nickname" to nickname,
             "profileUrl" to profileUrl,
+            "followerCount" to followerCount
         )
     }
 }

@@ -58,7 +58,8 @@ class VerificationActivity : AppCompatActivity() {
                 activityVerificationBinding.powerSpinnerView.text.toString(),
                 activityVerificationBinding.powerSpinnerView2.text.toString(),
                 activityVerificationBinding.etNicknameTextFormField.text.toString(),
-                ""
+                "",
+                0
             )
 
             verificationInsertViewModel.insertVerification(verification)

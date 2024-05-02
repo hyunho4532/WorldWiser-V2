@@ -34,6 +34,7 @@ import com.hyun.worldwiser.ui.travel.InsertActivity
 import com.hyun.worldwiser.util.AdapterFilter
 import com.hyun.worldwiser.util.IntentFilter
 import com.hyun.worldwiser.viewmodel.DateTimeFormatterViewModel
+import com.hyun.worldwiser.viewmodel.ProfileInformationViewModel
 import com.hyun.worldwiser.viewmodel.ProfileSelectViewModel
 import java.lang.Exception
 import java.time.format.DateTimeFormatter
@@ -68,6 +69,7 @@ class ProfileFragment : Fragment() {
     ): View {
 
         val profileSelectViewModel: ProfileSelectViewModel = ViewModelProvider(this)[ProfileSelectViewModel::class.java]
+        val profileInformationViewModel: ProfileInformationViewModel = ViewModelProvider(this)[ProfileInformationViewModel::class.java]
 
         val travelList = ArrayList<Travel>()
         val popularTourSpotsList = ArrayList<UserTourSpots>()
@@ -158,10 +160,14 @@ class ProfileFragment : Fragment() {
                         val userTravelType = document["travel_preferences"].toString()
                         val userFavoriteCountry = document["country_favorite"].toString()
                         val userProfileImage = document["profileUrl"].toString()
+                        val userFollowerCount = document["followerCount"].toString()
 
                         fragmentProfileBinding.tvProfileNickname.text = userNickname
                         fragmentProfileBinding.tvProfileTravelType.text = "선호하는 여행 타입: $userTravelType"
                         fragmentProfileBinding.tvProfileTravelTransport.text = "좋아하는 나라: $userFavoriteCountry"
+                        fragmentProfileBinding.tvProfileTravelFollowerCount.text = "팔로워 수: ${userFollowerCount}명"
+
+                        profileInformationViewModel._profileUrl.postValue(userProfileImage)
 
                         Glide.with(requireContext())
                             .load(userProfileImage)
@@ -170,7 +176,7 @@ class ProfileFragment : Fragment() {
                         db.collection("travelRecommends").whereEqualTo("travelRecommendAuthUid", auth.currentUser!!.uid).get()
                             .addOnSuccessListener { travelInserts ->
                                 if (isAdded) {
-                                    fragmentProfileBinding.tvProfileTravelCount.text = "여행 개수: ${travelInserts.count()}"
+                                    fragmentProfileBinding.tvProfileTravelCount.text = "여행 개수: ${travelInserts.count()}개"
                                 }
                             }
                     }

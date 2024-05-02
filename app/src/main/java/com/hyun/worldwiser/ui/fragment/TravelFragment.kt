@@ -57,6 +57,7 @@ class TravelFragment : Fragment() {
                         val travelRecommendAloneStatus = document["travelRecommendAloneStatus"].toString()
                         val travelRecommendImpression = document["travelRecommendImpression"].toString()
                         val travelRecommendFavoriteCount = Integer.parseInt(document["travelRecommendFavoriteCount"].toString())
+                        val travelRecommendProfileUrl = document["travelRecommendProfileUrl"].toString()
 
                         try {
 
@@ -92,7 +93,8 @@ class TravelFragment : Fragment() {
                                     travelRecommendImageUrlNullCheck,
                                     travelRecommendAloneStatus,
                                     travelRecommendImpression,
-                                    travelRecommendFavoriteCount
+                                    travelRecommendFavoriteCount,
+                                    travelRecommendProfileUrl
                                 )
 
                             travelRecommendList.add(travelRecommend)

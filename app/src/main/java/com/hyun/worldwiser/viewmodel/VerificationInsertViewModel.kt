@@ -14,7 +14,7 @@ class VerificationInsertViewModel : ViewModel() {
     private val _verificationResults = MutableLiveData<Boolean>()
     val verificationResults: LiveData<Boolean> = _verificationResults
 
-    fun insertVerification(verification: HashMap<String, String>) {
+    fun insertVerification(verification: HashMap<String, Any>) {
         verificationInsertRepository.insertVerification(verification)
     }
 }

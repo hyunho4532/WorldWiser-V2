@@ -17,13 +17,23 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout4"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="70dp"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/drawable_travel_recommend_radius_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/cv_travel_recommend_profileUrl"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/drawable_profile_user"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_travel_recommend_nickname"
@@ -33,21 +43,21 @@
                 android:fontFamily="@font/taebeak_bold"
                 android:textColor="@color/black"
                 android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@+id/cv_travel_recommend_profileUrl"
+                app:layout_constraintStart_toEndOf="@+id/cv_travel_recommend_profileUrl"
+                app:layout_constraintTop_toTopOf="@+id/cv_travel_recommend_profileUrl" />
 
             <TextView
                 android:id="@+id/tv_travel_recommend_auth_uid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginStart="8dp"
                 android:text=""
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="@+id/tv_travel_recommend_nickname"
-                app:layout_constraintTop_toBottomOf="@+id/tv_travel_recommend_nickname" />
+                app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                app:layout_constraintTop_toBottomOf="@+id/cv_travel_recommend_profileUrl" />
 
             <ImageView
                 android:id="@+id/iv_travel_recommend_delete"

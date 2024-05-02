@@ -48,6 +48,7 @@ class TravelRecommendAdapter(private val context: Context, private val travelRec
             val travelRecommendCountry = travelRecommend.travelRecommendCountry
             val travelRecommendFavoriteCount = travelRecommend.travelRecommendFavoriteCount
             val travelRecommendImageUrl = travelRecommend.travelRecommendImageUrl!!
+            val travelRecommendProfileUrl = travelRecommend.travelRecommendProfileUrl
 
             Log.d("travelRecommendAdapter", travelRecommendImageUrl)
 
@@ -118,6 +119,12 @@ class TravelRecommendAdapter(private val context: Context, private val travelRec
                     .with(context)
                     .load(secondImageUrl)
                     .into(itemView.findViewById(R.id.iv_travel_recommend_imageUrl_Second))
+
+                Glide.with(context)
+                    .load(travelRecommendProfileUrl)
+                    .into(itemView.findViewById(R.id.cv_travel_recommend_profileUrl))
+
+                Log.d("TravelRecommendAdapter", travelRecommendProfileUrl)
 
                 itemView.findViewById<LinearLayout>(R.id.linear_layout).setOnClickListener {
                     val intent = Intent(context, RecommendDetailActivity::class.java)
