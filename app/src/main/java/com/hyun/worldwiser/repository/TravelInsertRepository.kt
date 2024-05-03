@@ -15,8 +15,7 @@ class TravelInsertRepository {
     fun travelCountryRankingSelect (
         isAdded: Boolean,
         context: Context,
-        fragmentHomeBinding: FragmentHomeBinding,
-        repositorySuccess: (String) -> Unit
+        adapter: (CountryRankingAdapter) -> Unit
     ) {
         db.collection("travelInserts")
             .get()
@@ -47,11 +46,8 @@ class TravelInsertRepository {
                     if (countryRankingList.isNotEmpty()) {
                         val countryRankingAdapter = CountryRankingAdapter(context, countryRankingList)
 
-                        fragmentHomeBinding.rvTravelRanking.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        fragmentHomeBinding.rvTravelRanking.adapter = countryRankingAdapter
+                        adapter(countryRankingAdapter)
                     }
-
-                    repositorySuccess("TravelInsertRepository Connection!")
                 }
             }
     }

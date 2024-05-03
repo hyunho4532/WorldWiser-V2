@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hyun.worldwiser.adapter.HomeTravelRecommendAdapter
+import com.hyun.worldwiser.adapter.TravelRecommendAdapter
 import com.hyun.worldwiser.databinding.FragmentHomeBinding
 import com.hyun.worldwiser.model.HomeTravelRecommend
 
@@ -15,8 +16,7 @@ class TravelRecommendSelectRepository {
     fun travelRecommendSelect(
         isAdded: Boolean,
         context: Context,
-        fragmentHomeBinding: FragmentHomeBinding,
-        repositorySuccess: (String) -> Unit
+        adapter: (HomeTravelRecommendAdapter) -> Unit
     ) {
         db.collection("travelRecommends")
             .get()
@@ -34,11 +34,8 @@ class TravelRecommendSelectRepository {
 
                     val homeTravelRecommendAdapter = HomeTravelRecommendAdapter(context, travelRecommendList)
 
-                    fragmentHomeBinding.rvRecommendStatus.adapter = homeTravelRecommendAdapter
-                    fragmentHomeBinding.rvRecommendStatus.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    adapter(homeTravelRecommendAdapter)
                 }
-
-                repositorySuccess("TravelRecommendSelectRepository Connection!")
             }
     }
 }

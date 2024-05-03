@@ -17,8 +17,7 @@ class TravelCountryStatusSelectRepository {
     fun travelCountryStatusSelect(
         isAdded: Boolean,
         context: Context,
-        fragmentHomeBinding: FragmentHomeBinding,
-        repositorySuccess: (String) -> Unit
+        adapter: (TravelStatusAdapter) -> Unit
     ) {
         db.collection("travelInserts")
             .get()
@@ -48,8 +47,7 @@ class TravelCountryStatusSelectRepository {
 
                     val travelStatusAdapter = TravelStatusAdapter(context, travelStatusList)
 
-                    fragmentHomeBinding.rvTravelStatus.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    fragmentHomeBinding.rvTravelStatus.adapter = travelStatusAdapter
+                    adapter(travelStatusAdapter)
                 }
             }
     }
