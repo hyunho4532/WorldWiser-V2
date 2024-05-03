@@ -13,15 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.GsonBuilder
 import com.hyun.worldwiser.R
-import com.hyun.worldwiser.adapter.CountryRankingAdapter
 import com.hyun.worldwiser.adapter.TourSpotsAdapter
-import com.hyun.worldwiser.adapter.TravelStatusAdapter
 import com.hyun.worldwiser.databinding.FragmentHomeBinding
-import com.hyun.worldwiser.model.CountryRanking
 import com.hyun.worldwiser.model.TravelStatus
 import com.hyun.worldwiser.model.spots.Root
 import com.hyun.worldwiser.util.HomeFragmentTitleFilter
-import com.hyun.worldwiser.viewmodel.TravelRecommendSelectViewModel
+import com.hyun.worldwiser.viewmodel.TravelCountryRankingSelectViewModel
+import com.hyun.worldwiser.viewmodel.TravelCountryStatusSelectViewModel
+import com.hyun.worldwiser.viewmodel.TravelRecommendViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,7 +33,6 @@ class HomeFragment : Fragment() {
 
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    private val countryRankingList = ArrayList<CountryRanking>()
     private val travelStatusList = ArrayList<TravelStatus>()
 
     private val uniqueCountries = HashSet<String>()
@@ -64,80 +62,21 @@ class HomeFragment : Fragment() {
         val homeFragmentTitleFilter = HomeFragmentTitleFilter(fragmentHomeBinding)
         homeFragmentTitleFilter.homeFragmentTitleSettings()
 
-        val travelRecommendInsertViewModel = ViewModelProvider(this)[TravelRecommendSelectViewModel::class.java]
+        val travelRecommendViewModel = ViewModelProvider(this)[TravelRecommendViewModel::class.java]
+        val travelCountryRankingSelectViewModel = ViewModelProvider(this)[TravelCountryRankingSelectViewModel::class.java]
+        val travelCountryStatusSelectViewModel = ViewModelProvider(this)[TravelCountryStatusSelectViewModel::class.java]
 
-        travelRecommendInsertViewModel.travelRecommendSelect(isAdded, requireContext(), fragmentHomeBinding) { viewModelSuccess ->
+        travelRecommendViewModel.travelRecommendSelect(isAdded, requireContext(), fragmentHomeBinding) { viewModelSuccess ->
             Log.d("HomeFragment", viewModelSuccess)
         }
 
-        db.collection("travelInserts")
-            .get()
-            .addOnSuccessListener { querySnapshot  ->
+        travelCountryRankingSelectViewModel.travelCountryRankingSelect(isAdded, requireContext(), fragmentHomeBinding) { viewModelSuccess ->
+            Log.d("HomeFragment", viewModelSuccess)
+        }
 
-                if (isAdded) {
-                    val countryCountMap = HashMap<String, Int>()
-
-                    for (document in querySnapshot.documents) {
-                        val country = document["country"].toString()
-
-                        val count = countryCountMap.getOrDefault(country, 0)
-                        countryCountMap[country] = count + 1
-
-                        uniqueCountries.add(country)
-                    }
-
-                    countryRankingList.clear()
-
-                    countryCountMap.forEach { (country, count) ->
-                        countryRankingList.add(CountryRanking(country, count))
-                    }
-
-                    countryRankingList.sortByDescending {
-                        it.countryRankingCount
-                    }
-
-                    if (countryRankingList.isNotEmpty()) {
-                        val countryRankingAdapter = CountryRankingAdapter(requireContext(), countryRankingList)
-
-                        fragmentHomeBinding.rvTravelRanking.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                        fragmentHomeBinding.rvTravelRanking.adapter = countryRankingAdapter
-                    }
-                }
-            }
-
-
-        db.collection("travelInserts")
-            .get()
-            .addOnSuccessListener { querySnapshot  ->
-
-                if (isAdded) {
-                    val travelStatusCountMap = HashMap<String, Int>()
-
-                    for (document in querySnapshot.documents) {
-                        val countryStatus = document["countryStatus"].toString()
-
-                        val count = travelStatusCountMap.getOrDefault(countryStatus, 0)
-                        travelStatusCountMap[countryStatus] = count + 1
-
-                        uniqueCountries.add(countryStatus)
-                    }
-
-                    travelStatusList.clear()
-
-                    travelStatusCountMap.forEach { (country, count) ->
-                        travelStatusList.add(TravelStatus(country, count))
-                    }
-
-                    travelStatusList.sortByDescending {
-                        it.countryStatusCount
-                    }
-
-                    val travelStatusAdapter = TravelStatusAdapter(requireContext(), travelStatusList)
-
-                    fragmentHomeBinding.rvTravelStatus.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                    fragmentHomeBinding.rvTravelStatus.adapter = travelStatusAdapter
-                }
-            }
+        travelCountryStatusSelectViewModel.travelCountryStatusSelect(isAdded, requireContext(), fragmentHomeBinding) { viewModelSuccess ->
+            Log.d("HomeFragment", viewModelSuccess)
+        }
 
         tourApiService.getTourSpots (
             serviceKey = "KmXwF4GXnRJiiNY68ky5tSl88Zi3IsotZW3VlDC%2BEGf472pLAf%2FgWmsnJDq9d22bOLATJFTTixhypw6BuSDJug%3D%3D", numOfRows = 10,

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.hyun.worldwiser.databinding.FragmentHomeBinding
 import com.hyun.worldwiser.repository.TravelRecommendSelectRepository
 
-class TravelRecommendSelectViewModel : ViewModel() {
+class TravelRecommendViewModel : ViewModel() {
 
     private val travelRecommendSelectRepository: TravelRecommendSelectRepository = TravelRecommendSelectRepository()
 

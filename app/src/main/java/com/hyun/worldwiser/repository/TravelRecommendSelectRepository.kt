@@ -38,7 +38,7 @@ class TravelRecommendSelectRepository {
                     fragmentHomeBinding.rvRecommendStatus.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 }
 
-                repositorySuccess("TravelRecommendSelectViewModel Connection!")
+                repositorySuccess("TravelRecommendSelectRepository Connection!")
             }
     }
 }
