@@ -142,7 +142,7 @@ class ProfileFragment : Fragment() {
                             val userTourSpots = UserTourSpots(spotsTitle, popularSpotsImageUrl, spotsAddress)
                             popularTourSpotsList.add(userTourSpots)
 
-                            fragmentProfileBinding.popularSpotsRecyclerView.adapter = UserPopularTourSpotsAdapter(requireContext(), requireActivity(), popularTourSpotsList, tourSpotsSelectViewModel,)
+                            fragmentProfileBinding.popularSpotsRecyclerView.adapter = UserPopularTourSpotsAdapter(requireContext(), requireActivity(), popularTourSpotsList, tourSpotsSelectViewModel)
                             fragmentProfileBinding.popularSpotsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
                         } catch (e: Exception) {
