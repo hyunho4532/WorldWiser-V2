@@ -18,7 +18,6 @@ import kotlinx.coroutines.*
 class IntroActivity : AppCompatActivity() {
 
     private lateinit var activityIntroBinding: ActivityIntroBinding
-    private var authType = AuthType.UnAuthStatus
     private var intentFilter: IntentFilter = IntentFilter()
 
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()

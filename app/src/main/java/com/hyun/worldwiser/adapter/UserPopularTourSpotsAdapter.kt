@@ -1,6 +1,7 @@
 package com.hyun.worldwiser.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.hyun.worldwiser.R
 import com.hyun.worldwiser.model.UserTourSpots
 import org.w3c.dom.Text
@@ -38,6 +40,16 @@ class UserPopularTourSpotsAdapter(
             Glide.with(context)
                 .load(userTourSpots.imageUrl)
                 .into(itemView.findViewById(R.id.iv_user_tour_spots_imageurl))
+
+            val tourSpotsDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_tour_spots_select, null)
+
+            val tourSpots
+
+            itemView.setOnClickListener {
+                MaterialAlertDialogBuilder(context)
+                    .setTitle("Title")
+                    .show()
+            }
         }
     }
 }
