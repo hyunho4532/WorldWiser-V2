@@ -37,5 +37,22 @@
             app:layout_constraintStart_toStartOf="@+id/tv_tour_spots_select"
             app:layout_constraintTop_toBottomOf="@+id/tv_tour_spots_select" />
 
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map_view"
+            android:layout_width="340dp"
+            android:layout_height="360dp"
+            android:layout_marginTop="60dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_tour_spots_address"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tour_spots_address" />
+
+        <TextView
+            android:id="@+id/tv_tour_spots_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@{tourSpotsSelectViewModel.tourSpotsAddress}"
+            app:layout_constraintStart_toStartOf="@+id/tv_tour_spots_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tour_spots_title" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

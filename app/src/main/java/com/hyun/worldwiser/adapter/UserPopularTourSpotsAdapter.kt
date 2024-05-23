@@ -55,12 +55,10 @@ class UserPopularTourSpotsAdapter (
                 .into(binding.ivUserTourSpotsImageurl)
 
             itemView.setOnClickListener {
-                tourSpotsSelectViewModel.setTourSpotsTitle(userTourSpots.title)
-
-                Log.d("UserPopularTourSpotsAdapter", tourSpotsSelectViewModel.tourSpotsTitle.value.toString())
 
                 val intent = Intent(context, SpotsDetailActivity::class.java).apply {
                     putExtra("TourSpotsTitle", userTourSpots.title)
+                    putExtra("TourSpotsAddress", userTourSpots.address)
                 }
                 context.startActivity(intent)
             }
