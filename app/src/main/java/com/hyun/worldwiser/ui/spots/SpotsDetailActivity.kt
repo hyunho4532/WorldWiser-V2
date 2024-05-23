@@ -39,11 +39,7 @@ class SpotsDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         val tourSpotsAddress = intent.getStringExtra("TourSpotsAddress")
 
         if (tourSpotsTitle != null) {
-            tourSpotsSelectViewModel.setTourSpots (
-                arrayListOf(TourSpotsSelect(tourSpotsTitle, tourSpotsAddress!!))
-            )
-
-            geocodeAddress(tourSpotsAddress, geocoder)
+            geocodeAddress(tourSpotsTitle, tourSpotsAddress!!, geocoder)
         }
 
         activitySpotsDetailBinding.mapView.onCreate(savedInstanceState)
@@ -51,18 +47,31 @@ class SpotsDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         activitySpotsDetailBinding.mapView.getMapAsync(this)
     }
 
-    private fun geocodeAddress(tourSpotsAddress: String, geocoder: Geocoder) {
+    private fun geocodeAddress(tourSpotsTitle: String, tourSpotsAddress: String, geocoder: Geocoder) {
         val cors = geocoder.getFromLocationName(tourSpotsAddress, 1)
-        Toast.makeText(this, "결과: ${cors!![0].latitude}", Toast.LENGTH_SHORT).show()
+
+        tourSpotsSelectViewModel.setTourSpots (
+            arrayListOf(TourSpotsSelect(tourSpotsTitle, tourSpotsAddress, cors!![0].latitude, cors[0].longitude))
+        )
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        val sydney = LatLng(-33.852, 151.211)
+
+        val currentTourSpotsOfLatLong = LatLng (
+            tourSpotsSelectViewModel.tourSpotsLatitude.value!!,
+            tourSpotsSelectViewModel.tourSpotsLongitude.value!!
+        )
+
         googleMap.addMarker(
             MarkerOptions()
-                .position(sydney)
+                .position(currentTourSpotsOfLatLong)
                 .title("Marker in Sydney")
         )
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        googleMap.moveCamera (
+            CameraUpdateFactory.newLatLngZoom(
+                currentTourSpotsOfLatLong,
+                15.0f
+            )
+        )
     }
 }
