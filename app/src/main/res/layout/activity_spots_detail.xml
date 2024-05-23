@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@{tourSpotsSelectViewModel.tourSpotsTitle}"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/tv_tour_spots_select"
             app:layout_constraintTop_toBottomOf="@+id/tv_tour_spots_select" />
 
@@ -41,7 +42,7 @@
             android:id="@+id/map_view"
             android:layout_width="340dp"
             android:layout_height="360dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="24dp"
             app:layout_constraintStart_toStartOf="@+id/tv_tour_spots_address"
             app:layout_constraintTop_toBottomOf="@+id/tv_tour_spots_address" />
 
@@ -53,6 +54,34 @@
             android:text="@{tourSpotsSelectViewModel.tourSpotsAddress}"
             app:layout_constraintStart_toStartOf="@+id/tv_tour_spots_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_tour_spots_title" />
+
+        <TextView
+            android:id="@+id/tv_tour_spots_gps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_tour_spots_location"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tour_spots_location" />
+
+        <TextView
+            android:id="@+id/tv_tour_spots_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="현재 내 위치는? ✈"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/map_view"
+            app:layout_constraintTop_toBottomOf="@+id/map_view" />
+
+        <TextView
+            android:id="@+id/tv_tour_spots_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="@+id/tv_tour_spots_gps"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tour_spots_gps" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
