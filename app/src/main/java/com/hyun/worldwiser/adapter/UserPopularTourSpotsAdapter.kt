@@ -1,13 +1,15 @@
 package com.hyun.worldwiser.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.gms.maps.GoogleMap
 import com.hyun.worldwiser.R
 import com.hyun.worldwiser.databinding.ItemUserPopularSpotsListBinding
 import com.hyun.worldwiser.model.UserTourSpots
@@ -17,13 +19,11 @@ import com.hyun.worldwiser.viewmodel.TourSpotsSelectViewModel
 
 class UserPopularTourSpotsAdapter (
     private val context: Context,
-    private val lifecycleOwner: LifecycleOwner,
-    private val userPopularTourSpotsList: ArrayList<UserTourSpots>,
-    private val tourSpotsSelectViewModel: TourSpotsSelectViewModel
+    viewModelStoreOwner: ViewModelStoreOwner,
+    private val userPopularTourSpotsList: ArrayList<UserTourSpots>
 ) : RecyclerView.Adapter<UserPopularTourSpotsAdapter.ViewHolder>() {
 
-    private val spotsDetailActivity: SpotsDetailActivity = SpotsDetailActivity()
-    private val intentFilter: IntentFilter = IntentFilter()
+    private val tourSpotsSelectViewModel: TourSpotsSelectViewModel = ViewModelProvider(viewModelStoreOwner)[TourSpotsSelectViewModel::class.java]
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemUserPopularSpotsListBinding = DataBindingUtil.inflate (
@@ -55,7 +55,14 @@ class UserPopularTourSpotsAdapter (
                 .into(binding.ivUserTourSpotsImageurl)
 
             itemView.setOnClickListener {
-                intentFilter.getIntent(context, spotsDetailActivity)
+                tourSpotsSelectViewModel.setTourSpotsTitle(userTourSpots.title)
+
+                Log.d("UserPopularTourSpotsAdapter", tourSpotsSelectViewModel.tourSpotsTitle.value.toString())
+
+                val intent = Intent(context, SpotsDetailActivity::class.java).apply {
+                    putExtra("TourSpotsTitle", userTourSpots.title)
+                }
+                context.startActivity(intent)
             }
         }
     }
