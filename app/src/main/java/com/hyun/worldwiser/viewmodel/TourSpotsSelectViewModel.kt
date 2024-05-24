@@ -52,6 +52,7 @@ class TourSpotsSelectViewModel : ViewModel() {
 
     fun setCurrentLocation(currentLocation: ArrayList<CurrentLocation>) {
         currentLocation.forEach { location ->
+            Log.d("TourSpotsSelectViewModel", location.currentLongitude.toString())
             _currentLocationLatitude.value = location.currentLatitude
             _currentLocationLongitude.value = location.currentLongitude
         }

@@ -25,6 +25,7 @@ import com.hyun.worldwiser.model.CurrentLocation
 import com.hyun.worldwiser.model.TourSpotsSelect
 import com.hyun.worldwiser.viewmodel.TourSpotsSelectViewModel
 import java.io.IOException
+import java.lang.NullPointerException
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
@@ -79,8 +80,6 @@ class SpotsDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
 
-                Log.d("SpotsDetailActivity", "현재 위치: ${location.latitude}")
-
                 if (location != null) {
                     try {
 
@@ -130,33 +129,46 @@ class SpotsDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
 
-        Log.d("SpotsDetailActivity", "관광지 위치: ${tourSpotsSelectViewModel.tourSpotsLatitude.value.toString()}")
+        try {
 
-        val tourSpotsOfLatLng = LatLng (
-            tourSpotsSelectViewModel.tourSpotsLatitude.value!!,
-            tourSpotsSelectViewModel.tourSpotsLongitude.value!!
-        )
+            Log.d("SpotsDetailActivity", "관광지 위치: ${tourSpotsSelectViewModel.tourSpotsLatitude.value.toString()}")
 
-        googleMap.addMarker(
-            MarkerOptions()
-                .position(tourSpotsOfLatLng)
-                .title("Marker in Sydney")
-        )
-
-        googleMap.moveCamera (
-            CameraUpdateFactory.newLatLngZoom(
-                tourSpotsOfLatLng,
-                15.0f
+            val tourSpotsOfLatLng = LatLng (
+                tourSpotsSelectViewModel.tourSpotsLatitude.value!!,
+                tourSpotsSelectViewModel.tourSpotsLongitude.value!!
             )
-        )
 
-        if (tourSpotsSelectViewModel.currentLocationLatitude.value != null && tourSpotsSelectViewModel.currentLocationLongitude.value != null) {
+            tourSpotsSelectViewModel.currentLocationLatitude.observe(this) { lat ->
 
+                if (lat != null) {
+                    tourSpotsSelectViewModel.currentLocationLongitude.observe(this) { lng ->
 
-            val polylineOptions = PolylineOptions()
-                .color(Color.BLACK)
-                .width(30F)
-                .add(tourSpotsOfLatLng)
+                        Log.d("SpotsDetailActivity", "현재 위치: $lat $lng")
+
+                        googleMap.addMarker(
+                            MarkerOptions()
+                                .position(tourSpotsOfLatLng)
+                                .title("Marker in Sydney")
+                        )
+
+                        val currentLocation = LatLng(lat, lng)
+                        googleMap.addMarker(
+                            MarkerOptions()
+                                .position(currentLocation)
+                                .title("Current Location")
+                        )
+
+                        googleMap.moveCamera (
+                            CameraUpdateFactory.newLatLngZoom(
+                                tourSpotsOfLatLng,
+                                15.0f
+                            )
+                        )
+                    }
+                }
+            }
+        } catch (e: NullPointerException) {
+            e.printStackTrace()
         }
     }
 }
