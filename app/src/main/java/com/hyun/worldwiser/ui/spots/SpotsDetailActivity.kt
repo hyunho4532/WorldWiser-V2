@@ -2,10 +2,8 @@ package com.hyun.worldwiser.ui.spots
 
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -13,23 +11,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
 import com.hyun.worldwiser.R
 import com.hyun.worldwiser.databinding.ActivitySpotsDetailBinding
 import com.hyun.worldwiser.model.CurrentLocation
 import com.hyun.worldwiser.model.TourSpotsSelect
 import com.hyun.worldwiser.viewmodel.TourSpotsSelectViewModel
 import java.io.IOException
-import java.lang.NullPointerException
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
 
 class SpotsDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -129,46 +119,18 @@ class SpotsDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
 
-        try {
+        val tourSpotsOfLatLng = LatLng (
+            tourSpotsSelectViewModel.tourSpotsLatitude.value!!,
+            tourSpotsSelectViewModel.tourSpotsLongitude.value!!
+        )
 
-            Log.d("SpotsDetailActivity", "관광지 위치: ${tourSpotsSelectViewModel.tourSpotsLatitude.value.toString()}")
+        tourSpotsSelectViewModel.currentLocationLatitude.observe(this) { currentLat ->
+            tourSpotsSelectViewModel.currentLocationLongitude.observe(this) { currentLng ->
 
-            val tourSpotsOfLatLng = LatLng (
-                tourSpotsSelectViewModel.tourSpotsLatitude.value!!,
-                tourSpotsSelectViewModel.tourSpotsLongitude.value!!
-            )
-
-            tourSpotsSelectViewModel.currentLocationLatitude.observe(this) { lat ->
-
-                if (lat != null) {
-                    tourSpotsSelectViewModel.currentLocationLongitude.observe(this) { lng ->
-
-                        Log.d("SpotsDetailActivity", "현재 위치: $lat $lng")
-
-                        googleMap.addMarker(
-                            MarkerOptions()
-                                .position(tourSpotsOfLatLng)
-                                .title("Marker in Sydney")
-                        )
-
-                        val currentLocation = LatLng(lat, lng)
-                        googleMap.addMarker(
-                            MarkerOptions()
-                                .position(currentLocation)
-                                .title("Current Location")
-                        )
-
-                        googleMap.moveCamera (
-                            CameraUpdateFactory.newLatLngZoom(
-                                tourSpotsOfLatLng,
-                                15.0f
-                            )
-                        )
-                    }
+                if (currentLat != null && currentLng != null) {
+                    tourSpotsSelectViewModel.handleCurrentLocation(googleMap, tourSpotsOfLatLng, currentLat, currentLng)
                 }
             }
-        } catch (e: NullPointerException) {
-            e.printStackTrace()
         }
     }
 }

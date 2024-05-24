@@ -1,16 +1,21 @@
 package com.hyun.worldwiser.viewmodel
 
+import android.graphics.Color
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
 import com.hyun.worldwiser.model.CurrentLocation
 import com.hyun.worldwiser.model.TourSpotsSelect
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
-import kotlin.time.times
 
 
 class TourSpotsSelectViewModel : ViewModel() {
@@ -74,5 +79,45 @@ class TourSpotsSelectViewModel : ViewModel() {
         val calculateDistanceBetweenTwoPoints = 2 * atan2(sqrt(calculateBetweenTwoPoints), sqrt(1 - calculateBetweenTwoPoints))
 
         return earthRadius * calculateDistanceBetweenTwoPoints
+    }
+
+    fun handleCurrentLocation(
+        googleMap: GoogleMap,
+        tourSpotsOfLatLng: LatLng,
+        currentLat: Double,
+        currentLng: Double
+    ) {
+
+        googleMap.addMarker(
+            MarkerOptions()
+                .position(tourSpotsOfLatLng)
+                .title("Marker in Sydney")
+        )
+
+        val currentLocationOfLatLng = LatLng (
+            currentLat,
+            currentLng
+        )
+
+        val polylineOptions = PolylineOptions()
+            .color(Color.BLACK)
+            .width(30F)
+            .add(tourSpotsOfLatLng)
+            .add(currentLocationOfLatLng)
+
+        googleMap.addMarker(
+            MarkerOptions()
+                .position(currentLocationOfLatLng)
+                .title("Current Location")
+        )
+
+        googleMap.moveCamera (
+            CameraUpdateFactory.newLatLngZoom(
+                tourSpotsOfLatLng,
+                15.0f
+            )
+        )
+
+        googleMap.addPolyline(polylineOptions)
     }
 }
