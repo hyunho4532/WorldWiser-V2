@@ -98,7 +98,7 @@ class TourSpotsSelectViewModel : ViewModel() {
             currentLat,
             currentLng
         )
-
+        
         val polylineOptions = PolylineOptions()
             .color(Color.BLACK)
             .width(30F)
