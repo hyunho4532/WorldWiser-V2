@@ -75,13 +75,24 @@
             app:layout_constraintTop_toBottomOf="@+id/map_view" />
 
         <TextView
+            android:id="@+id/tv_tour_spots_distance_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="현재 위치에서 관광지까지의 거리"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tv_tour_spots_gps"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tour_spots_gps" />
+
+        <TextView
             android:id="@+id/tv_tour_spots_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="TextView"
-            app:layout_constraintStart_toStartOf="@+id/tv_tour_spots_gps"
-            app:layout_constraintTop_toBottomOf="@+id/tv_tour_spots_gps" />
+            app:layout_constraintStart_toStartOf="@+id/tv_tour_spots_distance_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tour_spots_distance_title" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

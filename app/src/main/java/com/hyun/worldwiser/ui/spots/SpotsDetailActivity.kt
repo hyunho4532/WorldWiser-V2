@@ -1,8 +1,11 @@
 package com.hyun.worldwiser.ui.spots
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -15,8 +18,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
 import com.hyun.worldwiser.R
 import com.hyun.worldwiser.databinding.ActivitySpotsDetailBinding
+import com.hyun.worldwiser.model.CurrentLocation
 import com.hyun.worldwiser.model.TourSpotsSelect
 import com.hyun.worldwiser.viewmodel.TourSpotsSelectViewModel
 import java.io.IOException
@@ -69,17 +74,28 @@ class SpotsDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getLastLocation(geocoder: Geocoder) {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+
+                Log.d("SpotsDetailActivity", "현재 위치: ${location.latitude}")
+
                 if (location != null) {
                     try {
+
                         val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
 
                         if (addresses!!.isNotEmpty()) {
                             val address = addresses[0].getAddressLine(0)
                             val currentLat = location.latitude
                             val currentLng = location.longitude
+
+                            tourSpotsSelectViewModel.setCurrentLocation (
+                                arrayListOf (
+                                    CurrentLocation(currentLat, currentLng)
+                                )
+                            )
 
                             activitySpotsDetailBinding.tvTourSpotsGps.text = address
 
@@ -88,7 +104,7 @@ class SpotsDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
                             if (spotLat != null && spotLng != null) {
                                 val distance = tourSpotsSelectViewModel.setCalculateDistanceSpots(currentLat, currentLng, spotLat, spotLng)
-                                activitySpotsDetailBinding.tvTourSpotsDistance.text = distance.toString()
+                                activitySpotsDetailBinding.tvTourSpotsDistance.text = String.format("%.1f", distance) + "km"
                             }
                         }
                     } catch (e: IOException) {
@@ -105,28 +121,42 @@ class SpotsDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
         if (cors!!.isNotEmpty()) {
             tourSpotsSelectViewModel.setTourSpots (
-                arrayListOf(TourSpotsSelect(tourSpotsTitle, tourSpotsAddress, cors[0].latitude, cors[0].longitude))
+                arrayListOf (
+                    TourSpotsSelect(tourSpotsTitle, tourSpotsAddress, cors[0].latitude, cors[0].longitude)
+                )
             )
         }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
 
-        val currentTourSpotsOfLatLong = LatLng (
+        Log.d("SpotsDetailActivity", "관광지 위치: ${tourSpotsSelectViewModel.tourSpotsLatitude.value.toString()}")
+
+        val tourSpotsOfLatLng = LatLng (
             tourSpotsSelectViewModel.tourSpotsLatitude.value!!,
             tourSpotsSelectViewModel.tourSpotsLongitude.value!!
         )
 
         googleMap.addMarker(
             MarkerOptions()
-                .position(currentTourSpotsOfLatLong)
+                .position(tourSpotsOfLatLng)
                 .title("Marker in Sydney")
         )
+
         googleMap.moveCamera (
             CameraUpdateFactory.newLatLngZoom(
-                currentTourSpotsOfLatLong,
+                tourSpotsOfLatLng,
                 15.0f
             )
         )
+
+        if (tourSpotsSelectViewModel.currentLocationLatitude.value != null && tourSpotsSelectViewModel.currentLocationLongitude.value != null) {
+
+
+            val polylineOptions = PolylineOptions()
+                .color(Color.BLACK)
+                .width(30F)
+                .add(tourSpotsOfLatLng)
+        }
     }
 }
