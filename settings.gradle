@@ -26,4 +26,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Worldwiser"
 include ':app'
-include ':plugins'

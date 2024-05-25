@@ -5,10 +5,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.hyun.worldwiser.lib.GoogleMapLatLngModules
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.hyun.worldwiser.model.CurrentLocation
 import com.hyun.worldwiser.model.TourSpotsSelect
@@ -81,35 +81,27 @@ class TourSpotsSelectViewModel : ViewModel() {
         return earthRadius * calculateDistanceBetweenTwoPoints
     }
 
-    fun handleCurrentLocation(
+    fun handleCurrentLocation (
         googleMap: GoogleMap,
         tourSpotsOfLatLng: LatLng,
         currentLat: Double,
         currentLng: Double
     ) {
 
-        googleMap.addMarker(
-            MarkerOptions()
-                .position(tourSpotsOfLatLng)
-                .title("Marker in Sydney")
-        )
+        val googleMapLatLngModules = GoogleMapLatLngModules()
 
         val currentLocationOfLatLng = LatLng (
             currentLat,
             currentLng
         )
-        
+
+        googleMapLatLngModules.addMarker(googleMap, currentLocationOfLatLng, tourSpotsOfLatLng)
+
         val polylineOptions = PolylineOptions()
             .color(Color.BLACK)
             .width(30F)
             .add(tourSpotsOfLatLng)
             .add(currentLocationOfLatLng)
-
-        googleMap.addMarker(
-            MarkerOptions()
-                .position(currentLocationOfLatLng)
-                .title("Current Location")
-        )
 
         googleMap.moveCamera (
             CameraUpdateFactory.newLatLngZoom(
@@ -120,4 +112,5 @@ class TourSpotsSelectViewModel : ViewModel() {
 
         googleMap.addPolyline(polylineOptions)
     }
+
 }
