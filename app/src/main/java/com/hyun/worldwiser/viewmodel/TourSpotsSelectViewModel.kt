@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hyun.worldwiser.lib.GoogleMapLatLngModules
+import com.hyun.worldwiser.lib.GoogleMapModules
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -88,29 +88,14 @@ class TourSpotsSelectViewModel : ViewModel() {
         currentLng: Double
     ) {
 
-        val googleMapLatLngModules = GoogleMapLatLngModules()
+        val googleMapModules = GoogleMapModules()
 
-        val currentLocationOfLatLng = LatLng (
-            currentLat,
-            currentLng
-        )
+        googleMapModules.setLatLng(currentLat, currentLng) { currentLocationOfLatLng ->
+            googleMapModules.addMarker(googleMap, currentLocationOfLatLng, tourSpotsOfLatLng)
 
-        googleMapLatLngModules.addMarker(googleMap, currentLocationOfLatLng, tourSpotsOfLatLng)
+            googleMapModules.polylineOptions(googleMap, tourSpotsOfLatLng, currentLocationOfLatLng)
+        }
 
-        val polylineOptions = PolylineOptions()
-            .color(Color.BLACK)
-            .width(30F)
-            .add(tourSpotsOfLatLng)
-            .add(currentLocationOfLatLng)
-
-        googleMap.moveCamera (
-            CameraUpdateFactory.newLatLngZoom(
-                tourSpotsOfLatLng,
-                15.0f
-            )
-        )
-
-        googleMap.addPolyline(polylineOptions)
+        googleMapModules.moveCamera(googleMap, tourSpotsOfLatLng)
     }
-
 }
