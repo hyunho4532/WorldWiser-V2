@@ -41,7 +41,7 @@ class SpotsDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         activitySpotsDetailBinding.lifecycleOwner = this
         activitySpotsDetailBinding.tourSpotsSelectViewModel = tourSpotsSelectViewModel
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this )
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         val tourSpotsTitle = intent.getStringExtra("TourSpotsTitle")
         val tourSpotsAddress = intent.getStringExtra("TourSpotsAddress")
@@ -69,30 +69,23 @@ class SpotsDetailActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun getLastLocation(geocoder: Geocoder) {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-
                 if (location != null) {
                     try {
 
                         val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
 
                         if (addresses!!.isNotEmpty()) {
-                            val address = addresses[0].getAddressLine(0)
-                            val currentLat = location.latitude
-                            val currentLng = location.longitude
 
                             tourSpotsSelectViewModel.setCurrentLocation (
                                 arrayListOf (
-                                    CurrentLocation(currentLat, currentLng)
+                                    CurrentLocation(addresses[0].getAddressLine(0), location.latitude, location.longitude)
                                 )
                             )
 
-                            activitySpotsDetailBinding.tvTourSpotsGps.text = address
+                            if (tourSpotsSelectViewModel.tourSpotsLongitude.value != null && tourSpotsSelectViewModel.tourSpotsLatitude.value != null) {
+                                val distance =
+                                    tourSpotsSelectViewModel.setCalculateDistanceSpots(location.latitude, location.longitude, tourSpotsSelectViewModel.tourSpotsLongitude.value!!, tourSpotsSelectViewModel.tourSpotsLatitude.value!!)
 
-                            val spotLat = tourSpotsSelectViewModel.tourSpotsLatitude.value
-                            val spotLng = tourSpotsSelectViewModel.tourSpotsLongitude.value
-
-                            if (spotLat != null && spotLng != null) {
-                                val distance = tourSpotsSelectViewModel.setCalculateDistanceSpots(currentLat, currentLng, spotLat, spotLng)
                                 activitySpotsDetailBinding.tvTourSpotsDistance.text = String.format("%.1f", distance) + "km"
                             }
                         }

@@ -1,15 +1,12 @@
 package com.hyun.worldwiser.viewmodel
 
-import android.graphics.Color
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hyun.worldwiser.lib.GoogleMapModules
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.PolylineOptions
 import com.hyun.worldwiser.model.CurrentLocation
 import com.hyun.worldwiser.model.TourSpotsSelect
 import kotlin.math.atan2
@@ -25,6 +22,7 @@ class TourSpotsSelectViewModel : ViewModel() {
     private val _tourSpotsLatitude = MutableLiveData<Double>()
     private val _tourSpotsLongitude = MutableLiveData<Double>()
 
+    private val _currentAddress = MutableLiveData<String>()
     private val _currentLocationLatitude = MutableLiveData<Double>()
     private val _currentLocationLongitude = MutableLiveData<Double>()
 
@@ -39,6 +37,9 @@ class TourSpotsSelectViewModel : ViewModel() {
 
     val tourSpotsLongitude: LiveData<Double>
         get() = _tourSpotsLongitude
+
+    val currentAddress: LiveData<String>
+        get() = _currentAddress
 
     val currentLocationLatitude: LiveData<Double>
         get() = _currentLocationLatitude
@@ -57,7 +58,7 @@ class TourSpotsSelectViewModel : ViewModel() {
 
     fun setCurrentLocation(currentLocation: ArrayList<CurrentLocation>) {
         currentLocation.forEach { location ->
-            Log.d("TourSpotsSelectViewModel", location.currentLongitude.toString())
+            _currentAddress.value = location.address
             _currentLocationLatitude.value = location.currentLatitude
             _currentLocationLongitude.value = location.currentLongitude
         }
