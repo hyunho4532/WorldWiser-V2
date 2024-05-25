@@ -13,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -36,6 +35,7 @@ import com.hyun.worldwiser.util.IntentFilter
 import com.hyun.worldwiser.viewmodel.DateTimeFormatterViewModel
 import com.hyun.worldwiser.viewmodel.ProfileInformationViewModel
 import com.hyun.worldwiser.viewmodel.ProfileSelectViewModel
+import com.hyun.worldwiser.viewmodel.TourSpotsSelectViewModel
 import java.lang.Exception
 import java.time.format.DateTimeFormatter
 
@@ -70,6 +70,7 @@ class ProfileFragment : Fragment() {
 
         val profileSelectViewModel: ProfileSelectViewModel = ViewModelProvider(this)[ProfileSelectViewModel::class.java]
         val profileInformationViewModel: ProfileInformationViewModel = ViewModelProvider(this)[ProfileInformationViewModel::class.java]
+        val tourSpotsSelectViewModel: TourSpotsSelectViewModel = ViewModelProvider(this)[TourSpotsSelectViewModel::class.java]
 
         val travelList = ArrayList<Travel>()
         val popularTourSpotsList = ArrayList<UserTourSpots>()
@@ -141,7 +142,7 @@ class ProfileFragment : Fragment() {
                             val userTourSpots = UserTourSpots(spotsTitle, popularSpotsImageUrl, spotsAddress)
                             popularTourSpotsList.add(userTourSpots)
 
-                            fragmentProfileBinding.popularSpotsRecyclerView.adapter = UserPopularTourSpotsAdapter(requireContext(), popularTourSpotsList)
+                            fragmentProfileBinding.popularSpotsRecyclerView.adapter = UserPopularTourSpotsAdapter(requireContext(), requireActivity(), popularTourSpotsList)
                             fragmentProfileBinding.popularSpotsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
                         } catch (e: Exception) {

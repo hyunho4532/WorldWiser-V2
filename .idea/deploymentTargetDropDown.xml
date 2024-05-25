@@ -2,7 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="SpotsDetailActivity">
+        <State />
+      </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="module">
+        <State />
+      </entry>
+      <entry key="modules">
+        <State />
+      </entry>
+      <entry key="plugins">
         <State />
       </entry>
     </value>
