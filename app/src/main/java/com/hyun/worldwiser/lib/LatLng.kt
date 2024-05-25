@@ -3,8 +3,8 @@ package com.hyun.worldwiser.lib
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 
-interface Marker {
+interface LatLng {
+    fun setLatLng(currentLat: Double, currentLng: Double, resultLatLng: (LatLng) -> Unit) {
 
-    fun addMarker(googleMap: GoogleMap, vararg latLng: LatLng) {
     }
 }
